@@ -1,0 +1,8 @@
+@startuml
+class King {
+    + <<override>> Symbol : char <<get>>
+    + King(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SteppingPiece <|-- King
+@enduml

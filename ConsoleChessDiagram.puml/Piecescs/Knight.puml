@@ -1,0 +1,8 @@
+@startuml
+class Knight {
+    + <<override>> Symbol : char <<get>>
+    + Knight(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SteppingPiece <|-- Knight
+@enduml

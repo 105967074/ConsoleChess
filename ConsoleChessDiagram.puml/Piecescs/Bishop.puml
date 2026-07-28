@@ -1,0 +1,8 @@
+@startuml
+class Bishop {
+    + <<override>> Symbol : char <<get>>
+    + Bishop(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SlidingPiece <|-- Bishop
+@enduml

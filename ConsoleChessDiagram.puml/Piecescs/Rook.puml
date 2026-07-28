@@ -1,0 +1,8 @@
+@startuml
+class Rook {
+    + <<override>> Symbol : char <<get>>
+    + Rook(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SlidingPiece <|-- Rook
+@enduml

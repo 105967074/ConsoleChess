@@ -1,0 +1,34 @@
+@startuml
+class ChessBoard {
+    + Grid : Cell[,] <<get>>
+    + CurrentTurn : PlayerColor <<get>>
+    + ActivePieces : List<Piece> <<get>> <<set>>
+    + LastMove : Move? <<get>> <<set>>
+    + CurrentPlayer : PlayerColor <<get>>
+    - <<readonly>> moveValidator : MoveValidator
+    - <<readonly>> inputParser : MoveParser
+    + ChessBoard()
+    - ChessBoard(skipSetup:bool)
+    + SetupStandardBoard() : void
+    - SetUpNewGames() : void
+    - InitializeRank(rank:int, color:PlayerColor, IsBackRanked:bool) : void
+    - PlacePiece(piece:Piece, x:int, y:int) : void
+    + GetCell(x:int, y:int) : Cell?
+    + IsOffBoard(x:int, y:int) : bool
+    + SwitchTurn() : void
+    + ParseInputToMove(fromStr:string, toStr:string) : Move?
+    + ParseInputToMove(input:string) : Move?
+    + GetMove(fromX:int, fromY:int, toX:int, toY:int) : Move?
+    + IsLegalMove(move:Move) : bool
+    + HasAnyLegalMoves(playerColor:PlayerColor) : bool
+    + IsCheckmate(playerColor:PlayerColor) : bool
+    + IsStalemate(playerColor:PlayerColor) : bool
+    + ExecuteMove(move:Move) : void
+    + SimulateMoves(move:Move) : void
+    - ApplyMove(move:Move, promptPromotion:bool) : void
+    - HandlePromotion(cell:Cell, promptPromotion:bool) : void
+    + IsKingInCheck(kingColor:PlayerColor) : bool
+    + Clone() : ChessBoard
+    - {static} ClonePiece(piece:Piece) : Piece
+}
+@enduml

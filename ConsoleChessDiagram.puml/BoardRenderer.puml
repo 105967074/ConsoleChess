@@ -1,0 +1,5 @@
+@startuml
+class BoardRenderer <<static>> {
+    + {static} Render(board:ChessBoard) : void
+}
+@enduml

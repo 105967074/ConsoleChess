@@ -1,0 +1,15 @@
+@startuml
+class Direction <<static>> {
+    + {static} N : (int x, int y)
+    + {static} S : (int x, int y)
+    + {static} E : (int x, int y)
+    + {static} W : (int x, int y)
+    + {static} NE : (int x, int y)
+    + {static} NW : (int x, int y)
+    + {static} SE : (int x, int y)
+    + {static} SW : (int x, int y)
+    + {static} Orthogonal : (int x, int y)[]
+    + {static} Diagonal : (int x, int y)[]
+    + {static} AllEight : (int x, int y)[]
+}
+@enduml

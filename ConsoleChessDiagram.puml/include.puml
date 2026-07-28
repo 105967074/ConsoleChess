@@ -1,0 +1,153 @@
+@startuml
+abstract class SteppingPiece {
+    + SteppingPiece(color:PlayerColor)
+    # CalculateStepping(board:ChessBoard, displacementVector:(int dx, int dy)[]) : List<Move>
+}
+Piece <|-- SteppingPiece
+class Cell {
+    + X : int <<get>>
+    + Y : int <<get>>
+    + Piece : Piece? <<get>> <<set>>
+    + Cell(x:int, y:int)
+    + IsEmpty : bool <<get>>
+    + Occupy(piece:Piece) : void
+    + Clear() : void
+}
+class Direction <<static>> {
+    + {static} N : (int x, int y)
+    + {static} S : (int x, int y)
+    + {static} E : (int x, int y)
+    + {static} W : (int x, int y)
+    + {static} NE : (int x, int y)
+    + {static} NW : (int x, int y)
+    + {static} SE : (int x, int y)
+    + {static} SW : (int x, int y)
+    + {static} Orthogonal : (int x, int y)[]
+    + {static} Diagonal : (int x, int y)[]
+    + {static} AllEight : (int x, int y)[]
+}
+abstract class SlidingPiece {
+    + SlidingPiece(color:PlayerColor)
+    # CalculateSliding(board:ChessBoard, directions:(int x, int y)[]) : List<Move>
+}
+Piece <|-- SlidingPiece
+enum PlayerColor {
+    White,
+    Black,
+}
+enum PieceType {
+    Pawn,
+    Rook,
+    Bishop,
+    Knight,
+    Queen,
+    King,
+}
+abstract class Piece {
+    + Color : PlayerColor <<get>>
+    + {abstract} Symbol : char <<get>>
+    + ParentCell : Cell? <<get>> <<set>>
+    + HasMoved : bool <<get>> <<set>> = false
+    # Piece(color:PlayerColor)
+    + PieceColor : PlayerColor <<get>>
+    <<internal>> {abstract} GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+    # IsOnBoard(x:int, y:int) : bool
+    # IsOpponent(cell:Cell) : bool
+}
+class ChessBoard {
+    + Grid : Cell[,] <<get>>
+    + CurrentTurn : PlayerColor <<get>>
+    + ActivePieces : List<Piece> <<get>> <<set>>
+    + LastMove : Move? <<get>> <<set>>
+    + CurrentPlayer : PlayerColor <<get>>
+    - <<readonly>> moveValidator : MoveValidator
+    - <<readonly>> inputParser : MoveParser
+    + ChessBoard()
+    - ChessBoard(skipSetup:bool)
+    + SetupStandardBoard() : void
+    - SetUpNewGames() : void
+    - InitializeRank(rank:int, color:PlayerColor, IsBackRanked:bool) : void
+    - PlacePiece(piece:Piece, x:int, y:int) : void
+    + GetCell(x:int, y:int) : Cell?
+    + IsOffBoard(x:int, y:int) : bool
+    + SwitchTurn() : void
+    + ParseInputToMove(fromStr:string, toStr:string) : Move?
+    + ParseInputToMove(input:string) : Move?
+    + GetMove(fromX:int, fromY:int, toX:int, toY:int) : Move?
+    + IsLegalMove(move:Move) : bool
+    + HasAnyLegalMoves(playerColor:PlayerColor) : bool
+    + IsCheckmate(playerColor:PlayerColor) : bool
+    + IsStalemate(playerColor:PlayerColor) : bool
+    + ExecuteMove(move:Move) : void
+    + SimulateMoves(move:Move) : void
+    - ApplyMove(move:Move, promptPromotion:bool) : void
+    - HandlePromotion(cell:Cell, promptPromotion:bool) : void
+    + IsKingInCheck(kingColor:PlayerColor) : bool
+    + Clone() : ChessBoard
+    - {static} ClonePiece(piece:Piece) : Piece
+}
+class MoveValidator {
+    <<internal>> GetLegalMoves(board:ChessBoard, piece:Piece) : List<Move>
+    + IsLegalMove(board:ChessBoard, move:Move) : bool
+}
+class BoardRenderer <<static>> {
+    + {static} Render(board:ChessBoard) : void
+}
+class Move {
+    + From : Cell <<get>>
+    + To : Cell <<get>>
+    + PieceMoved : Piece <<get>>
+    + PieceCaptured : Piece? <<get>>
+    + IsPromotionMove : bool <<get>> <<set>>
+    + IsEnPassantMove : bool <<get>> <<set>>
+    + IsCastling : bool <<get>> <<set>>
+    + Move(from:Cell, to:Cell)
+}
+class MoveParser {
+    + Parse(input:string, board:ChessBoard) : Move?
+    + Parse(fromStr:string, toStr:string, board:ChessBoard) : Move?
+    - ParseCoordinates(fromStr:string, toStr:string, board:ChessBoard) : Move?
+    - ParseDestinationOnly(toStr:string, board:ChessBoard) : Move?
+    - ParsePieceToSquare(pieceName:string, toStr:string, board:ChessBoard) : Move?
+    - TryGetPieceType(pieceName:string, pieceType:Type?) : bool
+}
+class Program {
+    {static} - Main(args:string[]) : void
+}
+class Queen {
+    + <<override>> Symbol : char <<get>>
+    + Queen(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SlidingPiece <|-- Queen
+class Pawn {
+    + <<override>> Symbol : char <<get>>
+    + Pawn(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+Piece <|-- Pawn
+class Rook {
+    + <<override>> Symbol : char <<get>>
+    + Rook(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SlidingPiece <|-- Rook
+class King {
+    + <<override>> Symbol : char <<get>>
+    + King(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SteppingPiece <|-- King
+class Bishop {
+    + <<override>> Symbol : char <<get>>
+    + Bishop(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SlidingPiece <|-- Bishop
+class Knight {
+    + <<override>> Symbol : char <<get>>
+    + Knight(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+SteppingPiece <|-- Knight
+@enduml

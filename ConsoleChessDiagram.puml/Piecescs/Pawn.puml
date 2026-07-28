@@ -1,0 +1,8 @@
+@startuml
+class Pawn {
+    + <<override>> Symbol : char <<get>>
+    + Pawn(color:PlayerColor)
+    <<internal>> <<override>> GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+}
+Piece <|-- Pawn
+@enduml

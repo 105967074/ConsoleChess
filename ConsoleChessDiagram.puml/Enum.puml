@@ -1,0 +1,14 @@
+@startuml
+enum PlayerColor {
+    White,
+    Black,
+}
+enum PieceType {
+    Pawn,
+    Rook,
+    Bishop,
+    Knight,
+    Queen,
+    King,
+}
+@enduml

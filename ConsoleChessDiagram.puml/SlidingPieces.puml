@@ -1,0 +1,7 @@
+@startuml
+abstract class SlidingPiece {
+    + SlidingPiece(color:PlayerColor)
+    # CalculateSliding(board:ChessBoard, directions:(int x, int y)[]) : List<Move>
+}
+Piece <|-- SlidingPiece
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class Cell {
+    + X : int <<get>>
+    + Y : int <<get>>
+    + Piece : Piece? <<get>> <<set>>
+    + Cell(x:int, y:int)
+    + IsEmpty : bool <<get>>
+    + Occupy(piece:Piece) : void
+    + Clear() : void
+}
+@enduml

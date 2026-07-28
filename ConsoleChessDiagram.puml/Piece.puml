@@ -1,0 +1,13 @@
+@startuml
+abstract class Piece {
+    + Color : PlayerColor <<get>>
+    + {abstract} Symbol : char <<get>>
+    + ParentCell : Cell? <<get>> <<set>>
+    + HasMoved : bool <<get>> <<set>> = false
+    # Piece(color:PlayerColor)
+    + PieceColor : PlayerColor <<get>>
+    <<internal>> {abstract} GetPseudoLegalMoves(board:ChessBoard) : List<Move>
+    # IsOnBoard(x:int, y:int) : bool
+    # IsOpponent(cell:Cell) : bool
+}
+@enduml

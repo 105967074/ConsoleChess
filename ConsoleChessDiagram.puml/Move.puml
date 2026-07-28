@@ -1,0 +1,12 @@
+@startuml
+class Move {
+    + From : Cell <<get>>
+    + To : Cell <<get>>
+    + PieceMoved : Piece <<get>>
+    + PieceCaptured : Piece? <<get>>
+    + IsPromotionMove : bool <<get>> <<set>>
+    + IsEnPassantMove : bool <<get>> <<set>>
+    + IsCastling : bool <<get>> <<set>>
+    + Move(from:Cell, to:Cell)
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class MoveParser {
+    + Parse(input:string, board:ChessBoard) : Move?
+    + Parse(fromStr:string, toStr:string, board:ChessBoard) : Move?
+    - ParseCoordinates(fromStr:string, toStr:string, board:ChessBoard) : Move?
+    - ParseDestinationOnly(toStr:string, board:ChessBoard) : Move?
+    - ParsePieceToSquare(pieceName:string, toStr:string, board:ChessBoard) : Move?
+    - TryGetPieceType(pieceName:string, pieceType:Type?) : bool
+}
+@enduml

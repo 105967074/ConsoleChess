@@ -1,0 +1,6 @@
+@startuml
+class MoveValidator {
+    <<internal>> GetLegalMoves(board:ChessBoard, piece:Piece) : List<Move>
+    + IsLegalMove(board:ChessBoard, move:Move) : bool
+}
+@enduml

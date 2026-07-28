@@ -1,0 +1,7 @@
+@startuml
+abstract class SteppingPiece {
+    + SteppingPiece(color:PlayerColor)
+    # CalculateStepping(board:ChessBoard, displacementVector:(int dx, int dy)[]) : List<Move>
+}
+Piece <|-- SteppingPiece
+@enduml
